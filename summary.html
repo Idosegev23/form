@@ -79,7 +79,7 @@
         }
     </style>
 </head>
-<body>
+body>
     <div class="container">
         <h1>תודה על מילוי השאלון</h1>
         <div id="summary"></div>
@@ -91,10 +91,11 @@
             const urlParams = new URLSearchParams(window.location.search);
             const summary = document.getElementById('summary');
             const data = {};
+            let fullSummary = "";
             
             for (let [key, value] of urlParams) {
-                if (key === 'allergies') {
-                    const allergies = urlParams.getAll('allergies');
+                if (key === 'אלרגיות') {
+                    const allergies = urlParams.getAll('אלרגיות');
                     data[key] = allergies.join(', ');
                 } else {
                     data[key] = value;
@@ -102,7 +103,11 @@
                 const p = document.createElement('p');
                 p.innerHTML = `<strong>${key}:</strong> ${data[key]}`;
                 summary.appendChild(p);
+                fullSummary += `${key}: ${data[key]}\n`;
             }
+
+            // הוספת הסיכום המלא לאובייקט הנתונים
+            data['סיכום מלא'] = fullSummary;
 
             document.getElementById('confirmButton').addEventListener('click', function() {
                 // שליחת נתונים לוובהוק
@@ -132,3 +137,4 @@
     </script>
 </body>
 </html>
+
