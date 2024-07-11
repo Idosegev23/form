@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>הצהרת בריאות</title>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #BFA07A;
+            --secondary-color: #8B4513;
+            --background-color: #F2EEEB;
+            --text-color: #4A3728;
+            --button-color: #BFA07A;
+        }
+        body {
+            font-family: 'Heebo', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: var(--background-color);
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1, h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .logo img {
+            max-width: 200px;
+            display: block;
+            margin: 0 auto 30px;
+        }
+        .form-group {
+            margin-bottom: 25px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        input[type="text"], input[type="number"], input[type="date"], select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--primary-color);
+            border-radius: 15px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+            background-color: var(--background-color);
+        }
+        input[type="text"]:focus, input[type="number"]:focus, input[type="date"]:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(191, 160, 122, 0.2);
+        }
+        .radio-group, .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 5px;
+        }
+        .radio-group label, .checkbox-group label {
+            display: flex;
+            align-items: center;
+            font-weight: normal;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 15px;
+        }
+        .radio-group input, .checkbox-group input {
+            margin-left: 8px;
+        }
+        button[type="submit"] {
+            background-color: var(--button-color);
+            color: #fff;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            display: block;
+            margin: 30px auto 0;
+        }
+        button[type="submit"]:hover {
+            background-color: var(--secondary-color);
+        }
+        .hidden {
+            display: none;
+        }
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                padding: 15px;
+            }
+            input[type="text"], input[type="number"], input[type="date"], select, textarea {
+                font-size: 14px;
+            }
+            .radio-group, .checkbox-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .radio-group label, .checkbox-group label {
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+
+
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="https://res.cloudinary.com/dshp13fmt/image/upload/v1720731987/logo_aydalw.jpg" alt="Logo">
+        </div>
+        <h1>הצהרת בריאות</h1>
+        <form id="healthForm" action="summary.html" method="GET">
+            <div class="form-group">
+                <label for="name">שם הלקוח/ה:</label>
+                <input type="text" id="name" name="שם" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">נייד:</label>
+                <input type="text" id="phone" name="נייד" required>
+            </div>
+            <div class="form-group">
+                <label for="age">גיל:</label>
+                <input type="number" id="age" name="גיל" required>
+            </div>
+            <div class="form-group">
+                <label for="birthdate">תאריך לידה:</label>
+                <input type="date" id="birthdate" name="תאריך לידה" required>
+            </div>
+            <div class="form-group">
+                <label>מין:</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="מין" value="זכר" required> זכר</label>
+                    <label><input type="radio" name="מין" value="נקבה"> נקבה</label>
+                </div>
+            </div>
+
+            <h2>מצב בריאותי</h2>
+            
+            <div class="form-group">
+                <label>האם את/ה סובל/ת מהחלמה איטית של פצעים וצלקות בעור?</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="החלמה איטית של פצעים וצלקות" value="כן" required> כן</label>
+                    <label><input type="radio" name="החלמה איטית של פצעים וצלקות" value="לא"> לא</label>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>האם את/ה סובל/ת מגירוי בעור?</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="גירוי בעור" value="כן" required> כן</label>
+                    <label><input type="radio" name="גירוי בעור" value="לא"> לא</label>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>האם את/ה סובל/ת מאלרגיה / רגישות ל:</label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="אלרגיות" value="אספירין"> אספירין</label>
+                    <label><input type="checkbox" name="אלרגיות" value="לקטוז"> לקטוז</label>
+                    <label><input type="checkbox" name="אלרגיות" value="גלוטן"> גלוטן</label>
+                    <label><input type="checkbox" name="אלרגיות" value="זהב"> זהב</label>
+                    <label><input type="checkbox" name="אלרגיות" value="מתכות"> מתכות</label>
+                    <label><input type="checkbox" name="אלרגיות" value="אנטיביוטיקה"> אנטיביוטיקה</label>
+                    <label><input type="checkbox" name="אלרגיות" value="חומרי אלחוש"> חומרי אלחוש</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>האם את/ה סובל/ת מסכרת?</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="סכרת" value="כן" required> כן</label>
+                    <label><input type="radio" name="סכרת" value="לא"> לא</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>האם הסכרת מאוזנת עם תרופות?</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="סכרת מאוזנת עם תרופות" value="כן"> כן</label>
+                    <label><input type="radio" name="סכרת מאוזנת עם תרופות" value="לא"> לא</label>
+                    <label><input type="radio" name="סכרת מאוזנת עם תרופות" value="לא רלוונטי"> לא רלוונטי</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>האם את/ה סובל/ת ממחלות לב?</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="מחלות לב" value="כן" required> כן</label>
+                    <label><input type="radio" name="מחלות לב" value="לא"> לא</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>האם יש לך קוצב לב/מסתם לב מלאכותי?</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="קוצב לב או מסתם לב מלאכותי" value="כן" required> כן</label>
+                    <label><input type="radio" name="קוצב לב או מסתם לב מלאכותי" value="לא"> לא</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>האם יש לך לחץ דם גבוה או נמוך?</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="לחץ דם גבוה או נמוך" value="כן" required> כן</label>
+                    <label><input type="radio" name="לחץ דם גבוה או נמוך" value="לא"> לא</label>
+                </div>
+            </div>
+
+            <div id="bloodPressureDetails" class="form-group hidden">
+                <label>פרטי לחץ הדם:</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="פרטי לחץ הדם" value="גבוה"> לחץ דם גבוה</label>
+                    <label><input type="radio" name="פרטי לחץ הדם" value="נמוך"> לחץ דם נמוך</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>האם יש לך חוסר איזון של בלוטת התריס?</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="חוסר איזון של בלוטת התריס" value="כן" required> כן</label>
+                    <label><input type="radio" name="חוסר איזון של בלוטת התריס" value="לא"> לא</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>האם את/ה סובל/ת מ: הרפס / הפטיטיס / אפילפסיה / נשא/ית של V.I.H?</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="הרפס הפטיטיס אפילפסיה או VIH" value="כן" required> כן</label>
+                    <label><input type="radio" name="הרפס הפטיטיס אפילפסיה או VIH" value="לא"> לא</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>האם יש מתכת בגופך?</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="מתכת בגוף" value="כן" required> כן</label>
+                    <label><input type="radio" name="מתכת בגוף" value="לא"> לא</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>האם יש לך בשיניים: כתרים/ תותבות / שתלים?</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="כתרים תותבות או שתלים בשיניים" value="כן" required> כן</label>
+                    <label><input type="radio" name="כתרים תותבות או שתלים בשיניים" value="לא"> לא</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>האם את/ה סובל/ת ממחלה אחרת?</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="מחלה אחרת" value="כן" required> כן</label>
+                    <label><input type="radio" name="מחלה אחרת" value="לא"> לא</label>
+                </div>
+            </div>
+
+            <h2>היסטוריה רפואית ושימוש בתרופות ו/או תכשירים לעור</h2>
+
+            <div class="form-group">
+                <label>האם סבלת מאקנה בעברך?</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="אקנה בעבר" value="כן" required> כן</label>
+                    <label><input type="radio" name="אקנה בעבר" value="לא"> לא</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>האם את/ה משתמש/ת ברואקוטן?</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="שימוש ברואקוטן" value="כן" required> כן</label>
+                    <label><input type="radio" name="שימוש ברואקוטן" value="לא"> לא</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>האם השתמש/ת בעבר ברואקוטן?</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="שימוש ברואקוטן בעבר" value="כן" required> כן</label>
+                    <label><input type="radio" name="שימוש ברואקוטן בעבר" value="לא"> לא</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>האם את/ה משתמש/ת בראטין A?</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="שימוש בראטין A" value="כן" required> כן</label>
+                    <label><input type="radio" name="שימוש בראטין A" value="לא"> לא</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>האם את/ה מורח/ת על העור תכשיר עם מרשם רפואי?</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="שימוש בתכשיר עור עם מרשם רפואי" value="כן" required> כן</label>
+                    <label><input type="radio" name="שימוש בתכשיר עור עם מרשם רפואי" value="לא"> לא</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>האם את/ה סובל/ת ממחלת עור?</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="מחלת עור" value="כן" required> כן</label>
+                    <label><input type="radio" name="מחלת עור" value="לא"> לא</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>האם היו לך מחלות עור בעבר?</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="מחלות עור בעבר" value="כן" required> כן</label>
+                    <label><input type="radio" name="מחלות עור בעבר" value="לא"> לא</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>באלו תכשירי טיפוח הנך משתמש/ת על בסיס יומיומי:</label>
+                <textarea name="תכשירי טיפוח יומיומיים" rows="4"></textarea>
+            </div>
+            <h2>הרגלים וסגנון חיים</h2>
+
+            <div class="form-group">
+                <label>עישון:</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="עישון" value="כן" required> כן</label>
+                    <label><input type="radio" name="עישון" value="לא"> לא</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>רמת חשיפה לשמש:</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="רמת חשיפה לשמש" value="כלל לא" required> כלל לא</label>
+                    <label><input type="radio" name="רמת חשיפה לשמש" value="בינונית"> בינונית</label>
+                    <label><input type="radio" name="רמת חשיפה לשמש" value="גבוהה"> גבוהה</label>
+                </div>
+            </div>
+
+            <div id="femaleOnlySection" class="hidden">
+                <h2>לנשים בלבד</h2>
+                
+                <div class="form-group">
+                    <label>האם את משתמשת בגלולות למניעת הריון?</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="שימוש בגלולות למניעת הריון" value="כן"> כן</label>
+                        <label><input type="radio" name="שימוש בגלולות למניעת הריון" value="לא"> לא</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>האם המחזור שלך סדיר?</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="מחזור סדיר" value="כן"> כן</label>
+                        <label><input type="radio" name="מחזור סדיר" value="לא"> לא</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>האם את בהריון?</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="הריון" value="כן"> כן</label>
+                        <label><input type="radio" name="הריון" value="לא"> לא</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>האם את לאחר לידה? (בחצי שנה האחרונה)</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="לאחר לידה" value="כן"> כן</label>
+                        <label><input type="radio" name="לאחר לידה" value="לא"> לא</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>האם את בטיפולי פוריות?</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="טיפולי פוריות" value="כן"> כן</label>
+                        <label><input type="radio" name="טיפולי פוריות" value="לא"> לא</label>
+                    </div>
+                </div>
+            </div>
+
+            <h2>הצהרת המטופל/ת</h2>
+            <p>אני מאשר/ת שכל הפרטים שמילאתי לעיל נכונים ותואמים למצבי הבריאותי נכון ליום מילוי השאלון.</p>
+            <p>אני יודע/ת כי עלי לעדכן את הקוסמטיקאית על כל שינוי שחל במצבי הבריאותי</p>
+
+            <div class="form-group">
+                <label for="fullName">שם מלא:</label>
+                <input type="text" id="fullName" name="שם מלא" required>
+            </div>
+
+            <div class="form-group">
+                <label for="idNumber">ת.ז:</label>
+                <input type="text" id="idNumber" name="תעודת זהות" required>
+            </div>
+
+            <div class="form-group">
+                <label for="date">תאריך:</label>
+                <input type="date" id="date" name="תאריך" required>
+            </div>
+
+            <button type="submit">שלח/י טופס</button>
+        </form>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const genderRadios = document.querySelectorAll('input[name="מין"]');
+            const femaleOnlySection = document.getElementById('femaleOnlySection');
+
+            genderRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    if (this.value === 'נקבה') {
+                        femaleOnlySection.classList.remove('hidden');
+                    } else {
+                        femaleOnlySection.classList.add('hidden');
+                    }
+                });
+            });
+
+            const bloodPressureRadios = document.querySelectorAll('input[name="לחץ דם גבוה או נמוך"]');
+            const bloodPressureDetails = document.getElementById('bloodPressureDetails');
+
+            bloodPressureRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    if (this.value === 'כן') {
+                        bloodPressureDetails.classList.remove('hidden');
+                    } else {
+                        bloodPressureDetails.classList.add('hidden');
+                    }
+                });
+            });
+        });
+
+        document.getElementById('healthForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const queryString = new URLSearchParams(formData).toString();
+            window.location.href = 'summary.html?' + queryString;
+        });
+    </script>
+</body>
+</html>
