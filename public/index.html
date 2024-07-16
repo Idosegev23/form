@@ -50,10 +50,12 @@
     overflow: hidden; /* מונע גלילה על התמונות */
 }
 
-.background-images img {
+background-images img {
     width: 100vw; /* קובע שהתמונות יכסו את כל רוחב המסך */
-    height: auto;
+    height: 50vh; /* קובע שהתמונות יכסו חצי מגובה המסך */
     object-fit: cover;
+    clip-path: inset(10px 0 10px 0); /* חותך את התמונה כך שתהיה רווח קטן ביניהן */
+    margin: 5px 0; /* רווח קטן בין התמונות */
 }
 
         h1, h2 {
