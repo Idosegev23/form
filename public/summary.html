@@ -230,7 +230,7 @@ function saveLocally() {
     
     const { jsPDF } = window.jspdf;
 
-    html2canvas(document.querySelector("#summary"), { scale: 1 }).then(canvas => {
+    html2canvas(document.querySelector("#summary"), { scale: 2 }).then(canvas => {
         const imgData = canvas.toDataURL('image/jpeg', 1.0);
         const pdf = new jsPDF({
             orientation: 'portrait',
@@ -241,23 +241,19 @@ function saveLocally() {
         const pdfWidth = pdf.internal.pageSize.getWidth();
         const pdfHeight = pdf.internal.pageSize.getHeight();
         
-        // Scale the image to fit the PDF page width, and calculate the height
+        // Calculate the number of pages
         const imgProps = pdf.getImageProperties(imgData);
-        const imgWidth = pdfWidth;
-        const imgHeight = (imgProps.height * imgWidth) / imgProps.width;
-        
+        const imgHeight = (imgProps.height * pdfWidth) / imgProps.width;
         let heightLeft = imgHeight;
         let position = 0;
-        
-        // Add the first page
-        pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
+
+        pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, imgHeight);
         heightLeft -= pdfHeight;
-        
-        // Add extra pages if necessary
-        while (heightLeft >= 0) {
+
+        while (heightLeft > 0) {
             position = heightLeft - imgHeight;
             pdf.addPage();
-            pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
+            pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, imgHeight);
             heightLeft -= pdfHeight;
         }
 
@@ -273,7 +269,6 @@ function saveLocally() {
         alert('שגיאה ביצירת ה-PDF: ' + error.message);
     });
 }
-
     </script>
 </body>
 </html>
