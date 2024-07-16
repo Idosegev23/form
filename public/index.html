@@ -43,17 +43,18 @@
     bottom: 0;
     z-index: -1;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    align-items: center;
+    flex-direction: column; /* שינוי ל-column */
+    justify-content: flex-start; /* מוודא שהתמונות יתחילו מלמעלה */
+    align-items: center; /* מוודא שהתמונות יתמרכזו אופקית */
     opacity: 0.15;
-  }
-  .background-images img {
-    max-width: 100%;
+    overflow: hidden; /* מונע גלילה על התמונות */
+}
+
+.background-images img {
+    width: 100vw; /* קובע שהתמונות יכסו את כל רוחב המסך */
     height: auto;
     object-fit: cover;
-    margin: 5px;
-  }
+}
 
         h1, h2 {
             color: var(--primary-color);
