@@ -230,31 +230,32 @@ function saveLocally() {
     
     const { jsPDF } = window.jspdf;
 
-    html2canvas(document.querySelector("#summary"), { scale: 2 }).then(canvas => {
+    const element = document.querySelector("#summary");
+    const pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: 'a4'
+    });
+
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = pdf.internal.pageSize.getHeight();
+    let currentHeight = 0;
+
+    html2canvas(element, { scale: 2, windowWidth: pdfWidth * 2, windowHeight: pdfHeight * 2 }).then(canvas => {
+        const totalHeight = canvas.height;
+        const totalWidth = canvas.width;
+
         const imgData = canvas.toDataURL('image/jpeg', 1.0);
-        const pdf = new jsPDF({
-            orientation: 'portrait',
-            unit: 'mm',
-            format: 'a4'
-        });
-        
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = pdf.internal.pageSize.getHeight();
-        
-        // Calculate the number of pages
+
         const imgProps = pdf.getImageProperties(imgData);
         const imgHeight = (imgProps.height * pdfWidth) / imgProps.width;
-        let heightLeft = imgHeight;
-        let position = 0;
 
-        pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, imgHeight);
-        heightLeft -= pdfHeight;
+        pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, imgHeight);
 
-        while (heightLeft > 0) {
-            position = heightLeft - imgHeight;
+        while (currentHeight + pdfHeight < totalHeight) {
+            currentHeight += pdfHeight;
             pdf.addPage();
-            pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, imgHeight);
-            heightLeft -= pdfHeight;
+            pdf.addImage(imgData, 'JPEG', 0, -currentHeight, pdfWidth, imgHeight);
         }
 
         pdf.save(fileName);
