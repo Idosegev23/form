@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>סיכום הצהרת בריאות</title>
+    <style>
+        :root {
+            --primary-color: #BFA07A;
+            --secondary-color: #8B4513;
+            --background-color: #F2EEEB;
+            --text-color: #4A3728;
+            --button-color: #BFA07A;
+        }
+        body {
+            font-family: 'Heebo', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: var(--background-color);
+            background-image: url(https://res.cloudinary.com/dshp13fmt/image/upload/v1720516487/cld-sample.jpg);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-blend-mode: lighten;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logo img {
+            max-width: 200px;
+        }
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        #summary {
+            background-color: var(--background-color);
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+        #summary p {
+            margin: 10px 0;
+        }
+        #summary strong {
+            color: var(--primary-color);
+        }
+        .button {
+            background-color: var(--button-color);
+            color: #fff;
+            padding: 12px 12px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 600;
+            text-decoration: none;
+            display: block;
+            margin: 10px auto 0;
+            transition: background-color 0.3s ease;
+            text-align: center;
+            width: 30%;
+        }
+        .button:hover {
+            background-color: var(--secondary-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="https://res.cloudinary.com/dshp13fmt/image/upload/v1720731987/logo_aydalw.jpg" alt="Logo">
+        </div>
+        <h1>סיכום הצהרת בריאות</h1>
+        <div id="summary"></div>
+        <a href="#" class="button" onclick="sendToWebhook(); return false;">שלח</a>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const formData = JSON.parse(localStorage.getItem('formData'));
+            if (!formData) {
+                alert('לא נמצאו נתונים. אנא מלא את הטופס מחדש.');
+                window.location.href = 'index.html';
+                return;
+            }
+
+            const summaryDiv = document.getElementById('summary');
+            
+            let summaryHTML = '<h2>פרטים אישיים:</h2>';
+            summaryHTML += `<p><strong>שם הלקוח/ה:</strong> ${formData['שם'] || 'לא צוין'}</p>`;
+            summaryHTML += `<p><strong>גיל:</strong> ${formData['גיל'] || 'לא צוין'}</p>`;
+            summaryHTML += `<p><strong>תאריך לידה:</strong> ${formData['תאריך לידה'] || 'לא צוין'}</p>`;
+            summaryHTML += `<p><strong>מין:</strong> ${formData['מין'] || 'לא צוין'}</p>`;
+            
+            summaryHTML += '<h2>מצב בריאותי:</h2>';
+            summaryHTML += `<p><strong>החלמה איטית של פצעים וצלקות בעור:</strong> ${formData['החלמה איטית של פצעים וצלקות'] || 'לא צוין'}</p>`;
+            summaryHTML += `<p><strong>גירוי בעור:</strong> ${formData['גירוי בעור'] || 'לא צוין'}</p>`;
+            
+            if (formData['אלרגיות']) {
+                summaryHTML += '<p><strong>אלרגיות / רגישויות:</strong></p><ul>';
+                formData['אלרגיות'].split(',').forEach(allergy => {
+                    summaryHTML += `<li>${allergy.trim()}</li>`;
+                });
+                summaryHTML += '</ul>';
+            } else {
+                summaryHTML += '<p><strong>אלרגיות / רגישויות:</strong> אין</p>';
+            }
+            
+            summaryHTML += `<p><strong>סכרת:</strong> ${formData['סכרת'] || 'לא צוין'}</p>`;
+            if (formData['סכרת'] === 'כן') {
+                summaryHTML += `<p><strong>מאוזנת עם תרופות:</strong> ${formData['סכרת מאוזנת עם תרופות'] || 'לא צוין'}</p>`;
+            }
+            
+            summaryHTML += `<p><strong>מחלות לב:</strong> ${formData['מחלות לב'] || 'לא צוין'}</p>`;
+            summaryHTML += `<p><strong>קוצב לב/מסתם לב מלאכותי:</strong> ${formData['קוצב לב או מסתם לב מלאכותי'] || 'לא צוין'}</p>`;
+            summaryHTML += `<p><strong>לחץ דם גבוה או נמוך:</strong> ${formData['לחץ דם גבוה או נמוך'] || 'לא צוין'}</p>`;
+            if (formData['לחץ דם גבוה או נמוך'] === 'כן') {
+                summaryHTML += `<p><strong>פרטי לחץ הדם:</strong> ${formData['פרטי לחץ הדם'] || 'לא צוין'}</p>`;
+            }
+            
+            summaryHTML += `<p><strong>חוסר איזון של בלוטת התריס:</strong> ${formData['חוסר איזון של בלוטת התריס'] || 'לא צוין'}</p>`;
+            summaryHTML += `<p><strong>הרפס / הפטיטיס / אפילפסיה / נשא/ית של V.I.H:</strong> ${formData['הרפס הפטיטיס אפילפסיה או VIH'] || 'לא צוין'}</p>`;
+            if (formData['הרפס הפטיטיס אפילפסיה או VIH'] === 'כן') {
+                summaryHTML += `<p><strong>פירוט:</strong> ${formData['פירוט מחלה'] || 'לא צוין'}</p>`;
+            }
+            
+            summaryHTML += `<p><strong>מתכת בגוף:</strong> ${formData['מתכת בגוף'] || 'לא צוין'}</p>`;
+            summaryHTML += `<p><strong>כתרים/ תותבות / שתלים בשיניים:</strong> ${formData['כתרים תותבות או שתלים בשיניים'] || 'לא צוין'}</p>`;
+            summaryHTML += `<p><strong>מחלות אחרות:</strong> ${formData['מחלה אחרת'] || 'לא צוין'}</p>`;
+            if (formData['מחלה אחרת'] === 'כן') {
+                summaryHTML += `<p><strong>פירוט מחלות אחרות:</strong> ${formData['פירוט מחלה אחרת'] || 'לא צוין'}</p>`;
+            }
+            
+            summaryHTML += '<h2>היסטוריה רפואית ושימוש בתרופות:</h2>';
+            summaryHTML += `<p><strong>אקנה בעבר:</strong> ${formData['אקנה בעבר'] || 'לא צוין'}</p>`;
+            summaryHTML += `<p><strong>שימוש ברואקוטן:</strong> ${formData['שימוש ברואקוטן'] || 'לא צוין'}</p>`;
+            summaryHTML += `<p><strong>שימוש ברואקוטן בעבר:</strong> ${formData['שימוש ברואקוטן בעבר'] || 'לא צוין'}</p>`;
+            if (formData['שימוש ברואקוטן בעבר'] === 'כן') {
+                summaryHTML += `<p><strong>מועד השימוש ברואקוטן:</strong> ${formData['מתי רואקוטן'] || 'לא צוין'}</p>`;
+            }
+            
+            summaryHTML += `<p><strong>שימוש בראטין A:</strong> ${formData['שימוש בראטין A'] || 'לא צוין'}</p>`;
+            summaryHTML += `<p><strong>שימוש בתכשיר עם מרשם רפואי:</strong> ${formData['שימוש בתכשיר עור עם מרשם רפואי'] || 'לא צוין'}</p>`;
+            if (formData['שימוש בתכשיר עור עם מרשם רפואי'] === 'כן') {
+                summaryHTML += `<p><strong>פירוט התכשיר:</strong> ${formData['איזה תכשיר מרשם רפואי'] || 'לא צוין'}</p>`;
+            }
+            
+            summaryHTML += `<p><strong>מחלת עור:</strong> ${formData['מחלת עור'] || 'לא צוין'}</p>`;
+            if (formData['מחלת עור'] === 'כן') {
+                summaryHTML += `<p><strong>פירוט מחלת העור:</strong> ${formData['פירוט מחלת עור'] || 'לא צוין'}</p>`;
+            }
+            
+            summaryHTML += `<p><strong>מחלות עור בעבר:</strong> ${formData['מחלות עור בעבר'] || 'לא צוין'}</p>`;
+            summaryHTML += `<p><strong>תכשירי טיפוח יומיומיים:</strong> ${formData['תכשירי טיפוח יומיומיים'] || 'לא צוין'}</p>`;
+            
+            summaryHTML += '<h2>הרגלים וסגנון חיים:</h2>';
+            summaryHTML += `<p><strong>עישון:</strong> ${formData['עישון'] || 'לא צוין'}</p>`;
+            if (formData['עישון'] === 'כן') {
+                summaryHTML += `<p><strong>משך העישון (בשנים):</strong> ${formData['כמה שנים עישון'] || 'לא צוין'}</p>`;
+            }
+            
+            summaryHTML += `<p><strong>רמת חשיפה לשמש:</strong> ${formData['רמת חשיפה לשמש'] || 'לא צוין'}</p>`;
+            if (formData['רמת חשיפה לשמש'] !== 'כלל לא') {
+                summaryHTML += `<p><strong>סיבת החשיפה לשמש:</strong> ${formData['סיבת החשיפה לשמש'] || 'לא צוין'}</p>`;
+            }
+            
+            if (formData['מין'] === 'נקבה') {
+                summaryHTML += '<h2>מידע לנשים בלבד:</h2>';
+                summaryHTML += `<p><strong>שימוש בגלולות למניעת הריון:</strong> ${formData['שימוש בגלולות למניעת הריון'] || 'לא צוין'}</p>`;
+                summaryHTML += `<p><strong>מחזור סדיר:</strong> ${formData['מחזור סדיר'] || 'לא צוין'}</p>`;
+                summaryHTML += `<p><strong>הריון:</strong> ${formData['הריון'] || 'לא צוין'}</p>`;
+                summaryHTML += `<p><strong>לאחר לידה (בחצי שנה האחרונה):</strong> ${formData['לאחר לידה'] || 'לא צוין'}</p>`;
+                summaryHTML += `<p><strong>טיפולי פוריות:</strong> ${formData['טיפולי פוריות'] || 'לא צוין'}</p>`;
+            }
+            
+            summaryHTML += '<h2>הצהרת המטופל/ת:</h2>';
+            summaryHTML += `<p><strong>שם מלא:</strong> ${formData['שם מלא'] || 'לא צוין'}</p>`;
+            summaryHTML += `<p><strong>ת.ז:</strong> ${formData['תעודת זהות'] || 'לא צוין'}</p>`;
+            summaryHTML += `<p><strong>תאריך:</strong> ${formData['תאריך'] || 'לא צוין'}</p>`;
+
+            summaryDiv.innerHTML = summaryHTML;
+        });
+
+        function sendToWebhook() {
+            const formData = JSON.parse(localStorage.getItem('formData'));
+            const webhookUrl = 'https://hook.eu2.make.com/00v28k9kh9pxis17dwl1v6lpcpioipm4';
+
+            fetch(webhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('הנתונים נשלחו בהצלחה!');
+                    saveLocally();
+                } else {
+                    throw new Error('שגיאה בשליחת הנתונים');
+                }
+            })
+            .catch(error => {
+                alert('שגיאה בשליחת הנתונים: ' + error.message);
+            });
+        }
+
+        function saveLocally() {
+    const formData = JSON.parse(localStorage.getItem('formData'));
+    const customerName = formData['שם'] || formData['שם מלא'] || 'אנונימי';
+    const customerId = formData['תעודת זהות'] || formData['ת.ז'] || 'ללא ת.ז';
+    
+    const fileName = `הצהרת בריאות-${customerName} ת.ז ${customerId}.pdf`;
+    
+    const { jsPDF } = window.jspdf;
+
+    html2canvas(document.querySelector("#summary"), { scale: 2 }).then(canvas => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF({
+            orientation: 'portrait',
+            unit: 'mm',
+            format: 'a4'
+        });
+        
+        const imgProps = pdf.getImageProperties(imgData);
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+        
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+        pdf.save(fileName);
+
+        // ניקוי הנתונים מהזיכרון המקומי וחזרה לדף ההצהרה
+        localStorage.removeItem('formData');
+        setTimeout(() => {
+            window.location.href = 'index.html';
+        }, 1000);
+    });
+}
+    </script>
+</body>
+</html>
