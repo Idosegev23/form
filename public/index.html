@@ -43,17 +43,17 @@
     bottom: 0;
     z-index: -1;
     display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
+    flex-direction: column; /* שינוי ל-column */
+    justify-content: flex-start; /* מוודא שהתמונות יתחילו מלמעלה */
+    align-items: center; /* מוודא שהתמונות יתמרכזו אופקית */
     opacity: 0.15;
+    overflow: hidden; /* מונע גלילה על התמונות */
+}
 
-background-images img {
+.background-images img {
     width: 100vw; /* קובע שהתמונות יכסו את כל רוחב המסך */
-    height: 50vh; /* קובע שהתמונות יכסו חצי מגובה המסך */
+    height: auto;
     object-fit: cover;
-    clip-path: inset(10px 0 10px 0); /* חותך את התמונה כך שתהיה רווח קטן ביניהן */
-    margin: 5px 0; /* רווח קטן בין התמונות */
 }
 
         h1, h2 {
